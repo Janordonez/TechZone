@@ -2,11 +2,10 @@ package org.example.TechZone.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.openxava.annotations.Label;
-import org.openxava.annotations.ListProperties;
-import org.openxava.annotations.Money;
+import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -22,14 +21,17 @@ public class Factura extends BaseEntity{
     private TipoDePago tipoDePago;
     @ElementCollection
             @ListProperties(
-                    "producto.nombre" + ",cantidad" + ",producto.categoria.nombre" + ",producto.precio" + ",getSubtotal()"
+                    "producto.nombre" +",cantidad" + ",producto.categoria.nombre" + ",producto.precio" + ",subtotal"
             )
     Collection<Detalle> detalles;
 
+    @ReadOnly
     @Money
-    private BigDecimal iva;
+    @Calculation("sum(detalles.subtotal) * ivaPorcentaje / 100")
+    BigDecimal iva;
+
+    @ReadOnly
     @Money
-    private BigDecimal subTotal;
-    @Money
-    private BigDecimal total;
+    @Calculation("sum(detalles.subtotal) + iva")
+    BigDecimal total;
 }

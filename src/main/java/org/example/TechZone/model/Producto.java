@@ -16,8 +16,8 @@ import java.math.BigDecimal;
 public class Producto extends BaseEntity{
 
     private String nombre;
-    private String modelo;
     private String marca;
+    private String modelo;
     private int stock;
     @Money
     private BigDecimal precio;
