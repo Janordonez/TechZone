@@ -3,10 +3,7 @@ package org.example.TechZone.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.TechZone.calculators.PrecioPorUnidadCalc;
-import org.openxava.annotations.DefaultValueCalculator;
-import org.openxava.annotations.Depends;
-import org.openxava.annotations.Money;
-import org.openxava.annotations.PropertyValue;
+import org.openxava.annotations.*;
 
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
@@ -21,6 +18,16 @@ public class Detalle {
     @ManyToOne(fetch = FetchType.LAZY)
     public Producto producto;
 
+    @DefaultValueCalculator(
+            value = PrecioPorUnidadCalc.class,
+            properties = @PropertyValue(
+                    name = "numeroProducto",
+                    from = "producto.id")
+    )
+    @Money
+    @ReadOnly
+    public BigDecimal precioPorUnidad;
+
     @Money
     @Depends("precioPorUnidad, cantidad")
     public BigDecimal getSubtotal(){
@@ -30,12 +37,4 @@ public class Detalle {
         return new BigDecimal(cantidad).multiply(precioPorUnidad);
     }
 
-    @DefaultValueCalculator(
-            value = PrecioPorUnidadCalc.class,
-            properties = @PropertyValue(
-                    name = "numeroProducto",
-                    from = "producto.numero")
-    )
-    @Money
-    public BigDecimal precioPorUnidad;
 }

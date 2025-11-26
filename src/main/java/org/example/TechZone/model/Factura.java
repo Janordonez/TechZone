@@ -21,13 +21,9 @@ public class Factura extends BaseEntity{
     private TipoDePago tipoDePago;
     @ElementCollection
             @ListProperties(
-                    "producto.nombre, cantidad, producto.categoria.nombre, producto.precio," +
-                            "subtotal+[" + "factura.ivaPorcentaje,"+ "factura.iva" + "factura.total" + "]"
+                    "producto.nombre" +",cantidad" + ",producto.categoria.nombre" + ",producto.precio" + ",subtotal"
             )
     Collection<Detalle> detalles;
-
-    @Digits(integer = 2, fraction = 0)
-    BigDecimal ivaPorcentaje;
 
     @ReadOnly
     @Money
