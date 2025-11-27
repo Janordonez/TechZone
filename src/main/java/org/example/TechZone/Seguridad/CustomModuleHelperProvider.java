@@ -3,6 +3,7 @@ package org.example.TechZone.Seguridad;
 import com.openxava.naviox.Modules;
 import com.openxava.naviox.impl.MetaModuleFactory;
 import com.openxava.naviox.impl.ModulesHelperProvider;
+import org.example.TechZone.model.Vistas;
 import org.openxava.application.meta.MetaModule;
 import org.openxava.jpa.XPersistence;
 import org.openxava.util.Users;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomModuleHelperProvider extends ModulesHelperProvider {
     public void init(String applicationName) {
@@ -49,9 +51,6 @@ public class CustomModuleHelperProvider extends ModulesHelperProvider {
         query.setParameter("user", user);
         List<String> vistasPermitidas = query.getResultList();
         List<MetaModule> result = new ArrayList<MetaModule>();
-        for(String s : vistasPermitidas){
-            System.out.println(s);
-        }
         if(user.equals("admin")){
             for (MetaModule module: MetaModuleFactory.createAll()) {
                 System.out.println(module.getName());

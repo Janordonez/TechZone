@@ -1,19 +1,19 @@
 package org.example.TechZone.calculators;
 
-import static org.openxava.jpa.XPersistence.getManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.TechZone.model.Producto;
 import org.openxava.calculators.ICalculator;
+import org.openxava.jpa.XPersistence;
 
-public class PrecioPorUnidadCalc implements ICalculator {
-    @Getter
-    @Setter
-    int numeroProducto;
+public class PrecioPorUnidad implements ICalculator {
+
+    @Getter @Setter
+    String id;
 
     @Override
     public Object calculate() throws Exception {
-        Producto producto = getManager().find(Producto.class, numeroProducto);
+        Producto producto = XPersistence.getManager().find(Producto.class, id);
         return producto.getPrecio();
     }
 }
