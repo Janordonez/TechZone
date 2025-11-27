@@ -43,4 +43,19 @@ public class Factura extends BaseEntity{
     @Calculation("sum(detalles.subtotal) + iva")
     BigDecimal importeTotal;
 
+    private boolean procesado;
+
+    public void confirmarFactura() {
+        if (procesado) {
+            throw new javax.validation.ValidationException("El pedido ya está procesado");
+        }
+
+        for (Detalle detalle : detalles) {
+            // Delegamos la lógica al producto
+            detalle.getProducto().disminuirStock(detalle.getCantidad());
+        }
+
+        this.procesado = true;
+    }
+
 }
