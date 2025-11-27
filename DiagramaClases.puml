@@ -1,0 +1,148 @@
+@startuml
+
+class BaseEntity
+{
+@GeneratedValue(generator = "system-uuid")
+@GenericGenerator(name = "system-uuid", strategy = "uuid")
+- id : String
+}
+
+class Categoria
+{
+- nombre : String
+- descripcion : String
+}
+
+class Cliente
+{
+- nombre : String
+- telefono : String
+- correo : String
+- direccion : String
+}
+
+class Detalle
+{
+@EntityValidator()
+- cantidad : int
+@ManyToOne(producto)
+- producto : Producto
+@DefaultValueCalculator(precioPorUnidad)
+- precioPorUnidad : BigDecimal
+- subtotal : BigDecimal
+}
+
+class Empleado
+{
+nombre;
+- usuario : String
+- contrasena : String
+- direccion : String
+- telefono : String
+- correo : String
+@ManyToOne(rol)
+@DescriptionsList(descriptionProperties = "nombreRol")
+- rol : Rol;
+}
+
+class Factura
+{
+- cliente : Cliente
+- fecha : LocalDate
+- tipoDePago : TipoDePago
+- detalles : Collection<Detalle>
+@DefaultValueCalculator(PorcentajeIVACalculator.class)
+- porcentajeIVA : BigDecimal
+@Calculation("sum(detalles.subtotal) * porcentajeIVA / 100")
+- iva : BigDecimal
+@Calculation("sum(detalles.subtotal) + iva")
+- importeTotal : BigDecimal
+}
+
+class Producto
+{
+- nombre : String
+- marca : String
+- modelo : String
+- stock : int
+- precio : BigDecimal
+@ManyToOne(categoria)
+- categoria : Categoria
+}
+
+class Rol
+{
+- nombreRol : String
+- descripcion : String
+@ElementCollection(@ListProperties("nombreVista"))
+- vistas : Collection<VistasPermitidas>
+}
+
+enum TipoDePago
+{
+EFECTIVO
+TARJETA
+TRANSFERENCIA
+}
+
+class Ventas
+{
+- fecha : LocalDate
+- ventasPorProducto : int
+- ventasTotales : int
+@OneToMany(factura, mappedBy = "id")
+- factura : Set<Factura>
+}
+
+enum Vistas
+{
+Categoria
+Cliente
+Detalle
+Empleado
+Factura
+Producto
+Rol
+Ventas
+}
+
+class VistasPermitidas
+{
+nombreVista : String
+}
+
+class DisponibilidadStock
+{
+- cantidad : int
+- producto : Producto
++ void validate(Messages messages)
+}
+
+BaseEntity --> Categoria
+BaseEntity --> Cliente
+BaseEntity --> Empleado
+BaseEntity --> Factura
+BaseEntity --> Producto
+BaseEntity --> Rol
+BaseEntity --> Ventas
+
+Categoria --* Producto
+
+Cliente --* Factura
+
+Detalle --* Factura
+
+Producto --* Detalle
+Producto --* DisponibilidadStock
+
+Factura --* Ventas
+
+Rol --* Empleado
+
+TipoDePago --* Factura
+
+VistasPermitidas --* Rol
+
+Vistas --* VistasPermitidas
+
+@enduml
