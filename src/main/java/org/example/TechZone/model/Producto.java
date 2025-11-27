@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openxava.annotations.DescriptionsList;
 import org.openxava.annotations.Money;
+import org.openxava.annotations.Required;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 @Setter
 public class Producto extends BaseEntity{
 
+    @Required
     private String nombre;
     private String marca;
     private String modelo;
