@@ -2,7 +2,8 @@ package org.example.TechZone.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.TechZone.calculators.PrecioPorUnidadCalc;
+
+import org.example.TechZone.calculators.PrecioPorUnidad;
 import org.openxava.annotations.*;
 
 import javax.persistence.Embeddable;
@@ -19,22 +20,19 @@ public class Detalle {
     public Producto producto;
 
     @DefaultValueCalculator(
-            value = PrecioPorUnidadCalc.class,
+            value = PrecioPorUnidad.class,
             properties = @PropertyValue(
-                    name = "numeroProducto",
-                    from = "producto.id")
+                    name = "id",
+                    from = "producto.id"
+            )
     )
     @Money
-    @ReadOnly
-    public BigDecimal precioPorUnidad;
+    BigDecimal precioPorUnidad;
 
     @Money
-    @Depends("precioPorUnidad, cantidad")
-    public BigDecimal getSubtotal(){
-        if(precioPorUnidad == null){
-            return BigDecimal.ZERO;
-        }
-        return new BigDecimal(cantidad).multiply(precioPorUnidad);
-    }
+    @Calculation("precioPorUnidad * cantidad")
+    BigDecimal subtotal;
+
+
 
 }
