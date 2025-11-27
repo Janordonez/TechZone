@@ -26,4 +26,16 @@ public class Producto extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @DescriptionsList
     private Categoria categoria;
+
+
+    public void disminuirStock(int cantidad) {
+        if (this.stock < cantidad) {
+            // Esto lanzará un error amigable al usuario en OpenXava
+            throw new javax.validation.ValidationException(
+                    "No hay suficiente stock del producto " + nombre +
+                            ". Stock actual: " + stock + ", Solicitado: " + cantidad
+            );
+        }
+        this.stock = this.stock - cantidad;
+    }
 }
