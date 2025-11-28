@@ -6,6 +6,7 @@ import org.openxava.annotations.DescriptionsList;
 import org.openxava.annotations.Money;
 import org.openxava.annotations.Required;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 public class Producto extends BaseEntity{
 
     @Required
+    @Column(length = 32)
     private String nombre;
     private String marca;
     private String modelo;

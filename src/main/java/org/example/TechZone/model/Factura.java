@@ -16,7 +16,7 @@ import java.util.Collection;
 @Setter
 public class Factura extends BaseEntity{
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Cliente cliente;
     private LocalDate fecha;
     private TipoDePago tipoDePago;
@@ -24,7 +24,7 @@ public class Factura extends BaseEntity{
     @ElementCollection
     @ListProperties(
             "producto.nombre, cantidad, producto.categoria.nombre, precioPorUnidad, subtotal+ [" +
-                    "factura.porcentajeIVA, factura.iva, factura.importeTotal]"
+                    "factura.porcentajeIVA, factura.iva, factura.importeTotal, factura.ventaNeta]"
     )
     Collection<Detalle> detalles;
 
@@ -43,19 +43,11 @@ public class Factura extends BaseEntity{
     @Calculation("sum(detalles.subtotal) + iva")
     BigDecimal importeTotal;
 
-    private boolean procesado;
+    @ReadOnly
+    @Money
+    @Calculation("importeTotal - iva")
+    BigDecimal ventaNeta;
 
-    public void confirmarFactura() {
-        if (procesado) {
-            throw new javax.validation.ValidationException("El pedido ya está procesado");
-        }
 
-        for (Detalle detalle : detalles) {
-            // Delegamos la lógica al producto
-            detalle.getProducto().disminuirStock(detalle.getCantidad());
-        }
-
-        this.procesado = true;
-    }
 
 }
