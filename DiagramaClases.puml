@@ -118,6 +118,33 @@ class DisponibilidadStock
 + void validate(Messages messages)
 }
 
+class Objetivos
+{
+id : int
+tipo_objetivo : String
+avance : float
+meta : float
+fec_inicio : Date
+fec_expiracion : Date
+}
+
+class EstadoFinanciero
+{
+id : int
+mes : String
+ingresos : float
+gastos : float
+total : float
+}
+
+class Proveedor
+{
+id : int
+direccion_prov : String
+producto : String
+total : float
+}
+
 BaseEntity --> Categoria
 BaseEntity --> Cliente
 BaseEntity --> Empleado
@@ -144,5 +171,13 @@ TipoDePago --* Factura
 VistasPermitidas --* Rol
 
 Vistas --* VistasPermitidas
+
+Objetivos --* Empleado
+Objetivos --* EstadoFinanciero
+
+EstadoFinanciero --* Proveedor
+EstadoFinanciero --* Ventas
+EstadoFinanciero --* Empleado
+
 
 @enduml
