@@ -14,11 +14,19 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@View(members = "cliente, empleado, fecha, tipoDePago; detalles, cancela;")
 public class Factura extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")
+    private Empleado empleado;
+
     private LocalDate fecha;
+
     private TipoDePago tipoDePago;
 
     @ElementCollection
@@ -48,6 +56,12 @@ public class Factura extends BaseEntity{
     @Calculation("importeTotal - iva")
     BigDecimal ventaNeta;
 
+    @Money
+    private BigDecimal cancela;
+
+    @Money
+    @Calculation("cancela - importeTotal")
+    BigDecimal cambio;
 
 
 }

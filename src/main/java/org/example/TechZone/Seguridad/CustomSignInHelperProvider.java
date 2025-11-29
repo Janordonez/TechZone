@@ -58,17 +58,18 @@ public class CustomSignInHelperProvider extends SignInHelperProvider {
         users = new Properties(); //Inicializar ya que se le pasan objetos de tipo Object
         users.setProperty("usuario.admin", "admin");
         users.setProperty("password.admin", "admin");
-        Query query = XPersistence.getManager().createQuery("SELECT e.usuario, e.contrasena, e.rol.id FROM Empleado e");
+        /*Query query = XPersistence.getManager().createQuery("SELECT e.usuario, e.contrasena, e.rol.id FROM Empleado e");
         List<Object[]> resultados = query.getResultList();
-        for (Object[] fila : resultados) {
-            String usuario = (String) fila[0];
-            String password = (String) fila[1];
-            String rol = (String) fila[2];
-            users.setProperty("usuario." + usuario, usuario);
-            users.setProperty("password." + usuario, password);
-            users.setProperty("rol." + usuario, rol);
-
-        }
+        if(!resultados.isEmpty()){
+            for (Object[] fila : resultados) {
+                String usuario = (String) fila[0];
+                String password = (String) fila[1];
+                String rol = (String) fila[2];
+                users.setProperty("usuario." + usuario, usuario);
+                users.setProperty("password." + usuario, password);
+                users.setProperty("rol." + usuario, rol);
+            }
+        }*/
         return users;
     }
 

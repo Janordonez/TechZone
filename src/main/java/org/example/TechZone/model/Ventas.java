@@ -19,7 +19,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-public class Ventas extends BaseEntity{
+public class    Ventas extends BaseEntity{
 
     @OnChange(ActualizarFacturas.class)
     private LocalDate fechaInicio;
@@ -28,7 +28,7 @@ public class Ventas extends BaseEntity{
 
     @ReadOnly
     @Transient
-    @ListProperties("cliente.nombre, fecha, importetotal+ [" + "ventas.ventabruta, ventas.ventaneta, ventas.impuestos, ventas.numerofacturas]")
+    @ListProperties("cliente.nombre, fecha, importetotal")
     private Collection<Factura> facturaList;
 
     public Collection<Factura> getFacturaList(){
@@ -99,6 +99,12 @@ public class Ventas extends BaseEntity{
 
     @Money
     @ReadOnly
-    BigDecimal gastoPromedio;
+    Double gastoPromedio;
+    public Double getGastoPromedio(){
+        if(getFacturaList() == null){
+            return 0.00;
+        }
+        return getFacturaList().stream().map(Factura::getImporteTotal).filter(Objects::nonNull).mapToDouble(BigDecimal::doubleValue).average().orElse(0.0);
+    }
 
 }

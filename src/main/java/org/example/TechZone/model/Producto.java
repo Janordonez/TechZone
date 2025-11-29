@@ -2,9 +2,7 @@ package org.example.TechZone.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.Money;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
+@View(members = "nombre;" + "marca, modelo;" + "stock, precio;" + "imagenes; categoria;")
 public class Producto extends BaseEntity{
 
     @Required
@@ -25,19 +24,11 @@ public class Producto extends BaseEntity{
     private int stock;
     @Money
     private BigDecimal precio;
+    @Files
+    private String imagenes;
     @ManyToOne(fetch = FetchType.LAZY)
     @DescriptionsList
     private Categoria categoria;
 
 
-    public void disminuirStock(int cantidad) {
-        if (this.stock < cantidad) {
-            // Esto lanzará un error amigable al usuario en OpenXava
-            throw new javax.validation.ValidationException(
-                    "No hay suficiente stock del producto " + nombre +
-                            ". Stock actual: " + stock + ", Solicitado: " + cantidad
-            );
-        }
-        this.stock = this.stock - cantidad;
-    }
 }
