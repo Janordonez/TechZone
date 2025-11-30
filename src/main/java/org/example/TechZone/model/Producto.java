@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @View(members = "nombre;" + "marca, modelo;" + "stock, precio;" + "imagenes; categoria;")
+@Tab(properties = "nombre, marca, modelo, stock, precio, categoria.nombre")
 public class Producto extends BaseEntity{
 
     @Required

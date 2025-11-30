@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openxava.annotations.ListProperties;
 import org.openxava.annotations.Required;
+import org.openxava.annotations.Tab;
 import org.openxava.annotations.TextArea;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@Tab(properties = "nombreRol, descripcion")
 public class Rol extends BaseEntity{
 
     @Required

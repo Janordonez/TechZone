@@ -19,13 +19,21 @@ public class MontoRegistradoCalculator implements ICalculator {
     @Setter
     String id;
 
+    @Getter
+    @Setter
+    BigDecimal fondoInicial;
+
     @Override
     public Object calculate() throws Exception {
         LocalDate fechaDia = fecha.toLocalDate();
         BigDecimal monto = XPersistence.getManager()
                 .createQuery("SELECT sum(f.importeTotal) FROM Factura f " +
-                        "WHERE f.fecha = :fecha AND f.empleado.id = :id" ,BigDecimal.class).setParameter("fecha", fechaDia).setParameter("id", id).getSingleResult();
+                        "WHERE f.fecha = :fecha AND f.empleado.id = :id" ,BigDecimal.class)
+                .setParameter("fecha", fechaDia)
+                .setParameter("id", id)
+                .getSingleResult();
 
-        return monto != null ? monto : BigDecimal.ZERO;
+
+        return (monto == null) ? BigDecimal.ZERO : monto;
     }
 }
