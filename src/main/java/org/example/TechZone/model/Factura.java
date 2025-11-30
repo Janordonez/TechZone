@@ -14,7 +14,7 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
-@View(members = "cliente, empleado, fecha, tipoDePago; detalles, cancela;")
+@View(members = "cliente, empleado, fecha, tipoDePago; detalles, cancela , cambio;")
 public class Factura extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -13,6 +13,7 @@ import javax.validation.constraints.Email;
 @Entity
 @Getter
 @Setter
+@Tab(properties = "nombre, usuario, contrasena, direccion, telefono, correo, rol.nombreRol")
 public class Empleado extends BaseEntity{
 
     @Required

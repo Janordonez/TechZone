@@ -2,10 +2,8 @@ package org.example.TechZone.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.TechZone.calculators.FechaFinal;
-import org.example.TechZone.calculators.FechaInicial;
-import org.example.TechZone.calculators.FondoInicialCalculator;
-import org.example.TechZone.calculators.MontoRegistradoCalculator;
+import net.bytebuddy.utility.nullability.MaybeNull;
+import org.example.TechZone.calculators.*;
 import org.openxava.annotations.*;
 
 import javax.persistence.Entity;
@@ -18,10 +16,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @View(members = "empleado; fechaInicio, fechaFin; fondoInicial, montoDeclarado, montoRegistrado; cerrado;")
+
 public class SesionesCaja extends BaseEntity{
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @DescriptionsList(descriptionProperties = "nombre")
+    @DefaultValueCalculator(EmpleadoArqueoCalculator.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Empleado empleado;
 
     @ReadOnly
@@ -35,18 +34,24 @@ public class SesionesCaja extends BaseEntity{
     @DefaultValueCalculator(FondoInicialCalculator.class)
     @ReadOnly
     private BigDecimal fondoInicial;
+
     @Money
     private BigDecimal montoDeclarado;
+
     @ReadOnly
     @DefaultValueCalculator(
             value = MontoRegistradoCalculator.class,
             properties = {@PropertyValue(name = "fecha", from = "fechaInicio"),
-                    @PropertyValue(name = "id", from = "empleado.id")
+                    @PropertyValue(name = "id", from = "empleado.id"),
+                    @PropertyValue(name = "fondoInicial", from = "fondoInicial")
             }
     )
+    @Depends(value = "empleado")
     private BigDecimal montoRegistrado;
+
     @ReadOnly
     private BigDecimal diferencia;
 
+    @ReadOnly
     private Boolean cerrado;
 }

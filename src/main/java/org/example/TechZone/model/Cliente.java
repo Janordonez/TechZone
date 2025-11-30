@@ -3,6 +3,7 @@ package org.example.TechZone.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.openxava.annotations.Required;
+import org.openxava.annotations.Tab;
 import org.openxava.annotations.TextArea;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Email;
 @Entity
 @Getter
 @Setter
+@Tab(properties = "nombre, telefono, correo, direccion")
 public class Cliente extends BaseEntity{
 
     @Required
