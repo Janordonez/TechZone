@@ -11,7 +11,8 @@
 	<default-module>		  
 		<controller name="Typical"/>		
 	</default-module>
-	
+
+    
 	<!-- 
 	You can define additional modules, for example:	  
 	<module name="OnlyReadTeacher">
