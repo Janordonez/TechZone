@@ -34,6 +34,6 @@ public class MontoRegistradoCalculator implements ICalculator {
                 .getSingleResult();
 
 
-        return (monto == null) ? BigDecimal.ZERO : monto;
+        return (monto == null) ? BigDecimal.ZERO : monto.add(fondoInicial);
     }
 }

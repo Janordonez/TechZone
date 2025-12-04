@@ -33,5 +33,34 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
 	</controller>    
     -->
 
+    <!-- Controller:
+   <controller name="MYReference">
+       <extends controller="Typical"/>
+       <action name="save" mode="detail"
+               by-default="if-possible"
+               class="org.openxava.actions.CreateNew"
+   </controller>
+   -->
 
+    <controller name="MYCRUD">
+        <extends controller="Typical"/>
+        <action name="save" mode="detail"
+                by-default="if-possible"
+                class="org.example.TechZone.Actions.CustomSaveAction"
+                image="save.gif"
+                icon="content-save"
+                keystroke="Control S"/>
+    </controller>
+    
+    <controller name="MYReference">
+        <extends controller="Reference"/>
+        <action name="createNew"
+                class="org.example.TechZone.Actions.NewCreateFromReference"
+                icon="plus-box-multiple"
+                image="create_new.gif"/>
+        <action name="modify"
+                class="org.example.TechZone.Actions.NewEditFromReference"
+                icon="border-color"
+                image="edit.gif"/>
+    </controller>
 </controllers>
