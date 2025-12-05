@@ -14,6 +14,13 @@ import java.math.BigDecimal;
 @Embeddable
 @Getter
 @Setter
+@EntityValidator(
+        value = org.example.TechZone.Validadores.DisponibilidadStock.class,
+        properties = {
+                @PropertyValue(name = "cantidad", from = "cantidad"),
+                @PropertyValue(name ="producto", from = "producto")
+        }
+)
 public class Detalle {
     public int cantidad;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +39,5 @@ public class Detalle {
     @Money
     @Calculation("precioPorUnidad * cantidad")
     BigDecimal subtotal;
-
-
 
 }
