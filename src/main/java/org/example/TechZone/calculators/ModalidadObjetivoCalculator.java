@@ -15,10 +15,14 @@ public class ModalidadObjetivoCalculator implements ICalculator {
 
     @Override
     public Object calculate() throws Exception {
-        if (fechaInicio == null || fechaFinal == null) return "indefinido";
+        if (fechaInicio == null || fechaFinal == null) return "Indefinido";
 
         int dias = fechaInicio.until(fechaFinal).getDays() + 1;
 
-        return dias <= 7 ? "semanal" : "mensual";
+        if (dias == 7) { return "Semanal"; }
+        if (dias >= 28 && dias <= 31) { return "Mensual"; }
+        return "Personalizado";
+
     }
+
 }
