@@ -24,6 +24,6 @@ public class Rol extends BaseEntity{
     @TextArea
     private String descripcion;
     @ElementCollection
-            @ListProperties("nombreVista")
+    @ListProperties("nombreVista")
     Collection<VistasPermitidas> vistas;
 }

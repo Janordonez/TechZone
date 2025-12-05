@@ -19,10 +19,14 @@ public class Cliente extends BaseEntity{
     @Required
     @Column(length = 32)
     private String nombre;
+
     @Column(length = 8)
     private String telefono;
+
     @Email
     private String correo;
+
     @TextArea
     private String direccion;
+
 }

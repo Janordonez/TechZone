@@ -2,6 +2,7 @@ package org.example.TechZone.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.TechZone.Validadores.SesionDeCajaValidator;
 import org.example.TechZone.calculators.*;
 import org.openxava.annotations.*;
 
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @View(members = "empleado; fechaInicio, fechaFin; fondoInicial, montoDeclarado, montoRegistrado; cerrado;")
-@EntityValidator(value = SesionesCaja.class)
+@EntityValidator(value = SesionDeCajaValidator.class)
 public class SesionesCaja extends BaseEntity{
 
     @DefaultValueCalculator(EmpleadoArqueoCalculator.class)

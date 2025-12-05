@@ -120,29 +120,46 @@ class DisponibilidadStock
 
 class Objetivos
 {
-id : int
-tipo_objetivo : String
-avance : float
-meta : float
-fec_inicio : Date
-fec_expiracion : Date
+- fechaInicio : LocalDate
+- fechaFinal : LocalDate
+@DefaultValueCalculator(ModalidadObjetivoCalculator)
+- modalidad : String
+- metaVentas : BigDecimal
+@DefaultValueCalculator(VentasEntreFechasCalculator)
+- ventasAcumuladas : BigDecimal
+@DefaultValueCalculator(PorcentajeObjetivoCalculator)
+- porcentajeAvance : BigDecimal
++ boolean isCumplido()
 }
 
 class EstadoFinanciero
 {
-id : int
-mes : String
-ingresos : float
-gastos : float
-total : float
+- id : int
+- mes : String
+- ingresos : float
+- gastos : float
+- total : float
 }
 
 class Proveedor
 {
-id : int
-direccion_prov : String
-producto : String
-total : float
+- id : int
+- direccion_prov : String
+- producto : String
+- total : float
+}
+
+class SesionesCaja
+{
+- empleado : Empleado
+- fechaInicio : LocalDateTime
+- fechaFin : LocalDateTime
+- fondoInicial : BigDecimal
+- montoDeclarado : BigDecimal
+@DefaultValueCalculator(MontoRegistradoCalculator)
+- montoRegistrado : BigDecimal
+- diferencia : BigDecimal
+- cerrado : Boolean
 }
 
 BaseEntity --> Categoria
@@ -152,6 +169,7 @@ BaseEntity --> Factura
 BaseEntity --> Producto
 BaseEntity --> Rol
 BaseEntity --> Ventas
+BaseEntity --> Objetivos
 
 Categoria --* Producto
 
@@ -159,8 +177,11 @@ Cliente --* Factura
 
 Detalle --* Factura
 
+Empleado --* SesionesCaja
+
 Producto --* Detalle
 Producto --* DisponibilidadStock
+Producto --* Proveedor
 
 Factura --* Ventas
 
@@ -175,9 +196,7 @@ Vistas --* VistasPermitidas
 Objetivos --* Empleado
 Objetivos --* EstadoFinanciero
 
-EstadoFinanciero --* Proveedor
 EstadoFinanciero --* Ventas
 EstadoFinanciero --* Empleado
-
 
 @enduml
