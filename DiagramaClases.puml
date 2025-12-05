@@ -120,12 +120,16 @@ class DisponibilidadStock
 
 class Objetivos
 {
-- id : int
-- tipo_objetivo : String
-- avance : float
-- meta : float
-- fec_inicio : Date
-- fec_expiracion : Date
+- fechaInicio : LocalDate
+- fechaFinal : LocalDate
+@DefaultValueCalculator(ModalidadObjetivoCalculator)
+- modalidad : String
+- metaVentas : BigDecimal
+@DefaultValueCalculator(VentasEntreFechasCalculator)
+- ventasAcumuladas : BigDecimal
+@DefaultValueCalculator(PorcentajeObjetivoCalculator)
+- porcentajeAvance : BigDecimal
++ boolean isCumplido()
 }
 
 class EstadoFinanciero
@@ -145,6 +149,19 @@ class Proveedor
 - total : float
 }
 
+class SesionesCaja
+{
+- empleado : Empleado
+- fechaInicio : LocalDateTime
+- fechaFin : LocalDateTime
+- fondoInicial : BigDecimal
+- montoDeclarado : BigDecimal
+@DefaultValueCalculator(MontoRegistradoCalculator)
+- montoRegistrado : BigDecimal
+- diferencia : BigDecimal
+- cerrado : Boolean
+}
+
 BaseEntity --> Categoria
 BaseEntity --> Cliente
 BaseEntity --> Empleado
@@ -152,12 +169,15 @@ BaseEntity --> Factura
 BaseEntity --> Producto
 BaseEntity --> Rol
 BaseEntity --> Ventas
+BaseEntity --> Objetivos
 
 Categoria --* Producto
 
 Cliente --* Factura
 
 Detalle --* Factura
+
+Empleado --* SesionesCaja
 
 Producto --* Detalle
 Producto --* DisponibilidadStock
@@ -178,6 +198,5 @@ Objetivos --* EstadoFinanciero
 
 EstadoFinanciero --* Ventas
 EstadoFinanciero --* Empleado
-
 
 @enduml
