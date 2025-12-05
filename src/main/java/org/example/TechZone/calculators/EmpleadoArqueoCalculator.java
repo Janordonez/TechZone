@@ -14,4 +14,3 @@ public class EmpleadoArqueoCalculator implements ICalculator {
         return XPersistence.getManager().createQuery("SELECT e FROM Empleado e WHERE e.usuario = :nombre", Empleado.class).setParameter("nombre", nombre).getSingleResult();
     }
 }
-

@@ -12,7 +12,13 @@
 		<controller name="Typical"/>		
 	</default-module>
 
-    
+
+	<module name="Factura">
+		<model name = "Factura"/>
+		<controller name="MYCRUD"/>
+		<controller name="MYReference"/>
+	</module>
+
 	<!-- 
 	You can define additional modules, for example:	  
 	<module name="OnlyReadTeacher">

@@ -34,7 +34,7 @@ public class CustomSaveAction extends SaveAction {
                 }
                 updateView(values, isResetAfterOnCreate());
 
-            }
+             }
             else {
                 Map values = modify();
                 updateView(values, isResetAfterOnModify());

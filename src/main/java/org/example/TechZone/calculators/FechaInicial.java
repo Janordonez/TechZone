@@ -16,4 +16,3 @@ public class FechaInicial implements ICalculator {
         return LocalDateTime.of(localDate, localTime);
     }
 }
-

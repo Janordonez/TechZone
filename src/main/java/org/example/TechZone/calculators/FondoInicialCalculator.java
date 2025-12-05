@@ -10,4 +10,3 @@ public class FondoInicialCalculator implements ICalculator {
         return new BigDecimal("1000");
     }
 }
-
