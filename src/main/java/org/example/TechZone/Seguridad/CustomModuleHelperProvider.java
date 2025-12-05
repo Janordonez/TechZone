@@ -45,9 +45,9 @@ public class CustomModuleHelperProvider extends ModulesHelperProvider {
         System.out.println(user);
         Query query = XPersistence.getManager().createQuery(
                 "SELECT v.nombreVista " +
-                "FROM Empleado e " +
-                "JOIN e.rol.vistas v " +
-                "WHERE e.usuario = :user");
+                        "FROM Empleado e " +
+                        "JOIN e.rol.vistas v " +
+                        "WHERE e.usuario = :user");
         query.setParameter("user", user);
         List<String> vistasPermitidas = query.getResultList();
         List<MetaModule> result = new ArrayList<MetaModule>();
