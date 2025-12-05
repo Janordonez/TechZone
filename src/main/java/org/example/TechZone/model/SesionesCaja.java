@@ -2,7 +2,6 @@ package org.example.TechZone.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.bytebuddy.utility.nullability.MaybeNull;
 import org.example.TechZone.calculators.*;
 import org.openxava.annotations.*;
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @View(members = "empleado; fechaInicio, fechaFin; fondoInicial, montoDeclarado, montoRegistrado; cerrado;")
-
+@EntityValidator(value = SesionesCaja.class)
 public class SesionesCaja extends BaseEntity{
 
     @DefaultValueCalculator(EmpleadoArqueoCalculator.class)

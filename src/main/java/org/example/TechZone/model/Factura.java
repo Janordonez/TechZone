@@ -63,5 +63,9 @@ public class Factura extends BaseEntity{
     @Calculation("cancela - importeTotal")
     BigDecimal cambio;
 
+    @Money
+    private BigDecimal propina;
+
+
 
 }

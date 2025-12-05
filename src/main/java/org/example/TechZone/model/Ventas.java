@@ -28,7 +28,7 @@ public class    Ventas extends BaseEntity{
 
     @ReadOnly
     @Transient
-    @ListProperties("cliente.nombre, fecha, importetotal")
+    @ListProperties("cliente.nombre, fecha, importeTotal")
     private Collection<Factura> facturaList;
 
     public Collection<Factura> getFacturaList(){
