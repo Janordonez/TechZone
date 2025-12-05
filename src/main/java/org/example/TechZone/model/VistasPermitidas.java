@@ -11,6 +11,4 @@ import javax.persistence.Embeddable;
 @Setter
 public class VistasPermitidas {
     private String nombreVista;
-
-
 }

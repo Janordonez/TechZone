@@ -14,17 +14,25 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@View(members = "cliente, empleado, fecha, tipoDePago; detalles, cancela , cambio;")
 public class Factura extends BaseEntity{
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")
+    private Empleado empleado;
+
     private LocalDate fecha;
+
     private TipoDePago tipoDePago;
 
     @ElementCollection
     @ListProperties(
             "producto.nombre, cantidad, producto.categoria.nombre, precioPorUnidad, subtotal+ [" +
-                    "factura.porcentajeIVA, factura.iva, factura.importeTotal]"
+                    "factura.porcentajeIVA, factura.iva, factura.importeTotal, factura.ventaNeta]"
     )
     Collection<Detalle> detalles;
 
@@ -43,19 +51,21 @@ public class Factura extends BaseEntity{
     @Calculation("sum(detalles.subtotal) + iva")
     BigDecimal importeTotal;
 
-    private boolean procesado;
+    @ReadOnly
+    @Money
+    @Calculation("importeTotal - iva")
+    BigDecimal ventaNeta;
 
-    public void confirmarFactura() {
-        if (procesado) {
-            throw new javax.validation.ValidationException("El pedido ya está procesado");
-        }
+    @Money
+    private BigDecimal cancela;
 
-        for (Detalle detalle : detalles) {
-            // Delegamos la lógica al producto
-            detalle.getProducto().disminuirStock(detalle.getCantidad());
-        }
+    @Money
+    @Calculation("cancela - importeTotal")
+    BigDecimal cambio;
 
-        this.procesado = true;
-    }
+    @Money
+    private BigDecimal propina;
+
+
 
 }
