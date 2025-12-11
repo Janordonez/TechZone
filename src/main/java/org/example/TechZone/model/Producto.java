@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
-@View(members = "nombre;" + "marca, modelo;" + "stock, precio;" + "imagenes; categoria;")
-@Tab(properties = "nombre, marca, modelo, stock, precio, categoria.nombre")
+@View(members = "nombre;" + "marca, modelo;" + "stock, precio, precioProveedor;" + "imagenes; categoria, proveedor;")
+@Tab(properties = "nombre, marca, modelo, stock, precio, precioProveedor, categoria.nombre")
 public class Producto extends BaseEntity{
 
     @Required
@@ -24,12 +24,20 @@ public class Producto extends BaseEntity{
     private String modelo;
     private int stock;
     @Money
+    @Required
     private BigDecimal precio;
+    @Money
+    @Required
+    private BigDecimal precioProveedor;
     @Files
     private String imagenes;
     @ManyToOne(fetch = FetchType.LAZY)
     @DescriptionsList
     private Categoria categoria;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @DescriptionsList(descriptionProperties = "nombreFiscal")
+    private Proveedor proveedor;
+
 
 
 }

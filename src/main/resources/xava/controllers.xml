@@ -51,9 +51,23 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
                 icon="content-save"
                 keystroke="Control S"/>
     </controller>
+
+    <controller name="OCRUD">
+        <extends controller="Typical"/>
+        <action name="save" mode="detail"
+                by-default="if-possible"
+                class="org.example.TechZone.Actions.CustomProveedor"
+                image="save.gif"
+                icon="content-save"
+                keystroke="Control S"/>
+    </controller>
     
-    <controller name="MYReference">
+    <controller name="Reference">
         <extends controller="Reference"/>
+        <action name="search"
+                class="org.openxava.actions.ReferenceSearchAction"
+                icon="magnify"
+                image="search.gif"/>
         <action name="createNew"
                 class="org.example.TechZone.Actions.NewCreateFromReference"
                 icon="plus-box-multiple"
@@ -62,5 +76,10 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
                 class="org.example.TechZone.Actions.NewEditFromReference"
                 icon="border-color"
                 image="edit.gif"/>
+        <action name="clear"
+                class="org.openxava.actions.ClearReferenceAction"
+                icon="eraser"/>
     </controller>
+
+
 </controllers>

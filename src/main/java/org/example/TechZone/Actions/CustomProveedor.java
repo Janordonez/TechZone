@@ -10,8 +10,7 @@ import javax.ejb.ObjectNotFoundException;
 import javax.validation.ValidationException;
 import java.util.Map;
 
-public class CustomSaveAction extends SaveAction {
-
+public class CustomProveedor extends SaveAction {
     @Override
     public void execute() throws Exception{
         try {
@@ -23,13 +22,13 @@ public class CustomSaveAction extends SaveAction {
                     Producto productoBd = XPersistence.getManager()
                             .createQuery("SELECT p FROM Producto p WHERE p.id = : id", Producto.class)
                             .setParameter("id", producto.get("id")).getSingleResult();
-                    productoBd.setStock(productoBd.getStock() - (int) o.get("cantidad"));
+                    productoBd.setStock(productoBd.getStock() + (int) o.get("cantidad"));
                     XPersistence.getManager().merge(productoBd);
 
                 }
                 updateView(values, isResetAfterOnCreate());
 
-             }
+            }
             else {
                 Map values = modify();
                 updateView(values, isResetAfterOnModify());

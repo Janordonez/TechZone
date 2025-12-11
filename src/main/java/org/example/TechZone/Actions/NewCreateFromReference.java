@@ -15,7 +15,7 @@ public class NewCreateFromReference extends CreateNewFromReferenceAction {
         if(empleado.getRol().getVistas().contains(getModelName())){
             super.execute();
         }else{
-            addError("No tiene permisas para crear un " + getModelName());
+            addError("No tiene permisas para crearlo");
         }
     }
 }

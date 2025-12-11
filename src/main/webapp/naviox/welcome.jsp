@@ -41,9 +41,7 @@ if (title == null) title = metaApplication.getLabel();
 
 <h1><%=metaApplication.getLabel()%></h1>
 <p><%=metaApplication.getDescription()%></p>
-<p><xava:message key="welcome_point1"/></p> 
-<p id="signin_tip"><xava:message key="signin_tip"/></p> 
-
+<img src="<%= request.getContextPath() %>/xava/images/TechZoneLogo.jpg" alt="Logo TechZone" width="320" height="320"/>
 <div class="ox-bottom-buttons">
 	<input type="hidden">
 	<a href="m/SignIn">

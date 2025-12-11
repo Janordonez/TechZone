@@ -49,8 +49,9 @@ public class CustomModuleHelperProvider extends ModulesHelperProvider {
                         "JOIN e.rol.vistas v " +
                         "WHERE e.usuario = :user");
         query.setParameter("user", user);
-        List<String> vistasPermitidas = query.getResultList();
+        List<Vistas> vistasPermitidas = query.getResultList();
         List<MetaModule> result = new ArrayList<MetaModule>();
+        List<String> vistasPermitidasString = vistasPermitidas.stream().map(Vistas::getValue).collect(Collectors.toList());
         if(user.equals("admin")){
             for (MetaModule module: MetaModuleFactory.createAll()) {
                 System.out.println(module.getName());
@@ -63,7 +64,7 @@ public class CustomModuleHelperProvider extends ModulesHelperProvider {
                 System.out.println(module.getName());
                 if (module.getName().equals("SignIn")) continue;
                 if (module.getName().equals("DiscussionComment")) continue;
-                if (!vistasPermitidas.contains(module.getName())) continue;
+                if (!vistasPermitidasString.contains(module.getName())) continue;
                 result.add(module);
             }
         }
